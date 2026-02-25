@@ -1,4 +1,4 @@
-import { prisma } from "../../prisma/client";
+import { prisma } from "../client";
 import { IUserInterface, IUserService,  } from '../interfaces/User';
 
 export class UserService implements IUserService {

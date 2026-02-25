@@ -12,7 +12,7 @@ export interface IUserService {
      deleteUser(userId: number): Promise<void>;
 }
 
-export interface IUserSeController {
+export interface IUserController {
      index(): Promise<IUserInterface[]>;
      show(req: any, res: any): Promise<IUserInterface>;
      store(req: any, res: any): Promise<IUserInterface>;
