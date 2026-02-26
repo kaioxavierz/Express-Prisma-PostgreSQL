@@ -1,4 +1,4 @@
-//import { prisma } from "../../prisma/client";
+import { prisma } from "../client";
 import { IUserController, IUserService, IUserInterface } from "../interfaces/User";
 import { UserService } from "../services/userService";
 
