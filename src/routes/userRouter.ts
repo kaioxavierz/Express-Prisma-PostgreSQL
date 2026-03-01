@@ -3,10 +3,10 @@ import { index, show, store, deleteUser, update } from "../Controllers/UserContr
 
 export const router = Router();
 
-router.get("/users", index);
-router.get("/users/:id", show);
-router.post("/users", store);
-router.put("/users/:id", update);
-router.delete("/users/:id", deleteUser);
+router.get("/", index);
+router.get("/:id", show);
+router.post("/", store);
+router.put("/:id", update);
+router.delete("/:id", deleteUser);
 
 export default router;

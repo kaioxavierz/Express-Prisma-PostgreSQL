@@ -1,0 +1,3 @@
+Separação correta de responsábilidade:
+ - Controller valida HTTP: Req.body vazio, campos obrigatórios existem, formato email e senha. (Evitar chamadas ao banco no serviço)
+ - Service Valida regra de negócio: email já existe, se usuário existe, se pode atualizar/deletar
