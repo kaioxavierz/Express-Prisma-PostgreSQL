@@ -1,33 +1,44 @@
-import { IUProductInterface } from "../interfaces/Product";
+import "dotenv/config";
 import { prisma } from "../client";
+import { Prisma, Product } from "@prisma/client";
 
 export class ProductService {
-    private product: IUProductInterface[] = [];
 
-    async createProduct(product: IUProductInterface): Promise<IUProductInterface> {
-        const newProduct = await prisma.product.create({ data: product });
+    async createProduct(
+        product: Prisma.ProductCreateInput
+    ): Promise<Product> {
+
+        const newProduct = await prisma.product.create({
+            data: product
+        });
+
         return newProduct;
     }
 
-    async findAll(): Promise<IUProductInterface[]> {
-        const products = await prisma.product.findMany();
-        return products;
+    async findAll(): Promise<Product[]> {
+        return prisma.product.findMany();
     }
 
-    async findById(productId: number): Promise<IUProductInterface | null> {
-        const product = await prisma.product.findUnique({ where: { id: productId } });
-        return product;
+    async findById(productId: number): Promise<Product | null> {
+        return prisma.product.findUnique({
+            where: { id: productId }
+        });
     }
 
-    async updateProduct(productId: number, newProduct: IUProductInterface): Promise<IUProductInterface> {
-        const updatedProduct = await prisma.product.update({
+    async updateProduct(
+        productId: number,
+        newProduct: Prisma.ProductUpdateInput
+    ): Promise<Product> {
+
+        return prisma.product.update({
             where: { id: productId },
             data: newProduct,
         });
-        return updatedProduct;
     }
 
     async deleteProduct(productId: number): Promise<void> {
-        await prisma.product.delete({ where: { id: productId } });
+        await prisma.product.delete({
+            where: { id: productId }
+        });
     }
 }

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { prisma } from "../client";
 import { IUserInterface, IUserService,  } from '../interfaces/User';
 
@@ -13,7 +14,7 @@ export class UserService implements IUserService {
         if(emailExists) {
             throw new Error("Email já cadastrado");
         };
-        const newUser = await prisma.user.create({  user });
+        const newUser = await prisma.user.create({ data: user });
         return newUser;
     }
 

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { prisma } from "../client";
 import { IUserController, IUserService, IUserInterface } from "../interfaces/User";
 import { UserService } from "../services/userService";
@@ -7,6 +8,7 @@ const userService: IUserService = new UserService();
 export async function index(): Promise< IUserInterface[]> {
     const users = await userService.findAll();
     return users;
+    console.log(users);
 };
 
 export async function show(req: any, res: any): Promise<IUserInterface | null> {
