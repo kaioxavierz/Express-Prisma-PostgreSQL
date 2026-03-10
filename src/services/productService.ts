@@ -1,44 +1,43 @@
 import "dotenv/config";
 import { prisma } from "../client";
 import { Prisma, Product } from "@prisma/client";
+import { IUProductInterface } from "../interfaces/Product";
 
 export class ProductService {
 
-    async createProduct(
-        product: Prisma.ProductCreateInput
-    ): Promise<Product> {
+    async createProduct( ...products: IUProductInterface[] ): Promise<Product> {
+        const createdProducts: Product[] = [];
 
-        const newProduct = await prisma.product.create({
-            data: product
-        });
+        for (const product of products) {
+            await prisma.product.create({ data: product });
+            createdProducts.push(product as Product);
 
-        return newProduct;
-    }
+        }
+        return createdProducts[createdProducts.length - 1];
+    };
 
     async findAll(): Promise<Product[]> {
         return prisma.product.findMany();
-    }
+    };
 
     async findById(productId: number): Promise<Product | null> {
-        return prisma.product.findUnique({
-            where: { id: productId }
-        });
-    }
+        return prisma.product.findUnique({ where: { id: productId } });
+    };
 
     async updateProduct(
         productId: number,
         newProduct: Prisma.ProductUpdateInput
     ): Promise<Product> {
-
         return prisma.product.update({
             where: { id: productId },
             data: newProduct,
         });
-    }
+    };
 
-    async deleteProduct(productId: number): Promise<void> {
-        await prisma.product.delete({
+    async deleteProduct(productId: number): Promise<IUProductInterface> {
+        const deletedProduct = await prisma.product.delete({
             where: { id: productId }
         });
-    }
+        return deletedProduct;
+    };
 }

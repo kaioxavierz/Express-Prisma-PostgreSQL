@@ -1,6 +1,5 @@
 export interface IUProductInterface {
     name: string;
-    description: string;
-    price: number;
+    subtitle: string;
     stock: number;    
 }

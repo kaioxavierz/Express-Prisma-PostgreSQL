@@ -21,4 +21,5 @@ model Product {
   name  String
   subtitle String
   stock Int
+  createdAt DateTime @default(now())
 }

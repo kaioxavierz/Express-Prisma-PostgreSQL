@@ -3,10 +3,10 @@ import { index, show, store, deleteProduct, update } from "../Controllers/Produc
 
 export const router = Router();
 
-router.get("/products", index);
-router.get("/products/:id", show);
-router.post("/products", store);
-router.put("/products/:id", update);
-router.delete("/products/:id", deleteProduct);
+router.get("/", index);
+router.get("/:id", show);
+router.post("/", store);
+router.put("/:id", update);
+router.delete("/:id", deleteProduct);
 
 export default router;
