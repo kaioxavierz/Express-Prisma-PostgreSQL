@@ -1,3 +1,21 @@
 Separação correta de responsábilidade:
  - Controller valida HTTP: Req.body vazio, campos obrigatórios existem, formato email e senha. (Evitar chamadas ao banco no serviço)
  - Service Valida regra de negócio: email já existe, se usuário existe, se pode atualizar/deletar
+
+Usuário entra no site
+      ↓
+Tela de Login / Cadastro
+      ↓
+Autenticação (JWT)
+      ↓
+Listagem das Bases disponíveis para o usuário
+      ↓
+Usuário escolhe uma Base
+      ↓
+Autenticação da Base (credenciais da base)
+      ↓
+Backend valida acesso
+      ↓
+Usuário entra na Base
+      ↓
+Página de Estoque da Base
