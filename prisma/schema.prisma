@@ -9,17 +9,51 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   name      String
   email     String   @unique
   password  String
-  createdAt DateTime @default(now())
+
+  bases     UserBase[]
+}
+
+model Base {
+  id        String   @id @default(uuid())
+  name      String
+  code      String
+  password  String
+
+  users     UserBase[]
+  inventory Inventory[]
+}
+
+model UserBase {
+  id      String @id @default(uuid())
+
+  userId  String
+  baseId  String
+  role    String
+
+  user User @relation(fields: [userId], references: [id])
+  base Base @relation(fields: [baseId], references: [id])
 }
 
 model Product {
-  id    Int    @id @default(autoincrement())
+  id    String @id @default(uuid())
   name  String
-  subtitle String
+  sku   String
   stock Int
-  createdAt DateTime @default(now())
+
+  inventory Inventory[]
+}
+
+model Inventory {
+  id        String @id @default(uuid())
+
+  productId String
+  baseId    String
+  quantity  Int
+
+  product Product @relation(fields: [productId], references: [id])
+  base    Base    @relation(fields: [baseId], references: [id])
 }
