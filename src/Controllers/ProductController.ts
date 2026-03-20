@@ -17,7 +17,7 @@ export async function index( req: Request, res: Response ): Promise<Response> {
 }
 
 export async function show(req: Request, res: Response): Promise<Response> {
-  const productId = Number(req.params.id);
+  const productId = String(req.params.id);
   const product = await productService.findById(productId);
 
   if (!product) {
@@ -29,12 +29,12 @@ export async function show(req: Request, res: Response): Promise<Response> {
 export async function store(req: Request, res: Response): Promise<Response> {
   const data: Prisma.ProductCreateInput = {
     name: req.body.name,
-    subtitle: req.body.subtitle,
+    sku: req.body.sku,
     stock: req.body.stock
   };
 
-  if(!data.name || !data.subtitle || data.stock === undefined) {
-    throw new AppError("Nome, subtítulo e estoque são obrigatórios", 400);
+  if(!data.name || !data.sku || data.stock === undefined) {
+    throw new AppError("Nome, SKU e estoque são obrigatórios", 400);
   };
 
   const newProduct = await productService.createProduct(data);
@@ -43,16 +43,16 @@ export async function store(req: Request, res: Response): Promise<Response> {
 
 export async function update(req: Request, res: Response): Promise<Response> {
 
-  const productId = Number(req.params.id);
+  const productId = String(req.params.id);
 
   const data: Prisma.ProductUpdateInput = {
     name: req.body.name,
-    subtitle: req.body.subtitle,
+    sku: req.body.sku,
     stock: req.body.stock
   };
 
-  if(!data.name || !data.subtitle || data.stock === undefined) {
-    throw new AppError("Nome, subtítulo e estoque são obrigatórios", 400);
+  if(!data.name || !data.sku || data.stock === undefined) {
+    throw new AppError("Nome, SKU e estoque são obrigatórios", 400);
   };
 
   const updatedProduct = await productService.updateProduct(
@@ -63,7 +63,7 @@ export async function update(req: Request, res: Response): Promise<Response> {
 };
 
 export async function deleteProduct( req: Request, res: Response): Promise<Response> {
-  const productId = Number(req.params.id);
+  const productId = String(req.params.id);
 
    const deletedProduct = await productService.deleteProduct(productId);
 

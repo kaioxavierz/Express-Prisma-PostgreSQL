@@ -26,7 +26,7 @@ export class UserService implements IUserService {
         return prisma.user.findMany();
     }
 
-    async findById(userId: number): Promise<IUserInterface> {
+    async findById(userId: string): Promise<IUserInterface> {
 
         const user = await prisma.user.findUnique({
             where: { id: userId },
@@ -39,7 +39,7 @@ export class UserService implements IUserService {
         return user;
     }
 
-    async updateUser(userId: number, newUser: IUserInterface): Promise<IUserInterface> {
+    async updateUser(userId: string, newUser: IUserInterface): Promise<IUserInterface> {
 
         const userExists = await prisma.user.findUnique({
             where: { id: userId },
@@ -55,7 +55,7 @@ export class UserService implements IUserService {
         });
     }
 
-    async deleteUser(userId: number): Promise<void> {
+    async deleteUser(userId: string): Promise<void> {
 
         const userExists = await prisma.user.findUnique({
             where: { id: userId },

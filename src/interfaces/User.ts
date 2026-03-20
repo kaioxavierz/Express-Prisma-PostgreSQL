@@ -7,9 +7,9 @@ export interface IUserInterface {
 export interface IUserService {
      createUser(user: IUserInterface): Promise<IUserInterface>;
      findAll(): Promise<IUserInterface[]>;
-     findById(userId: number): Promise<IUserInterface | null>;
-     updateUser(userId: number, newUser: IUserInterface): Promise<IUserInterface>;
-     deleteUser(userId: number): Promise<void>;
+     findById(userId: string): Promise<IUserInterface | null>;
+     updateUser(userId: string, newUser: IUserInterface): Promise<IUserInterface>;
+     deleteUser(userId: string): Promise<void>;
 }
 
 export interface IUserController {

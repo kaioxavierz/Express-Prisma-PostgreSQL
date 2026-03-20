@@ -20,12 +20,12 @@ export class ProductService {
         return prisma.product.findMany();
     };
 
-    async findById(productId: number): Promise<Product | null> {
+    async findById(productId: string): Promise<Product | null> {
         return prisma.product.findUnique({ where: { id: productId } });
     };
 
     async updateProduct(
-        productId: number,
+        productId: string,
         newProduct: Prisma.ProductUpdateInput
     ): Promise<Product> {
         return prisma.product.update({
@@ -34,7 +34,7 @@ export class ProductService {
         });
     };
 
-    async deleteProduct(productId: number): Promise<IUProductInterface> {
+    async deleteProduct(productId: string): Promise<IUProductInterface> {
         const deletedProduct = await prisma.product.delete({
             where: { id: productId }
         });

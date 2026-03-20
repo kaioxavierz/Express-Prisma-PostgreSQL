@@ -11,8 +11,8 @@ export async function index(req: Request, res: Response) {
 }
 
 export async function show(req: Request, res: Response) {
-  const userId = Number(req.params.id);
-  if (!userId || isNaN(userId)) {
+  const userId = String(req.params.id);
+  if (!userId) {
     throw new AppError("ID inválido", 400);
   }
 
@@ -32,10 +32,10 @@ export async function store(req: Request, res: Response) {
 }
 
 export async function update(req: Request, res: Response) {
-  const userId = Number(req.params.id);
+  const userId = String(req.params.id);
   const { name, email, password } = req.body;
 
-  if (!userId || isNaN(userId)) {
+  if (!userId) {
     throw new AppError("ID inválido", 400);
   }
 
@@ -49,9 +49,9 @@ export async function update(req: Request, res: Response) {
 }
 
 export async function deleteUser(req: Request, res: Response) {
-  const userId = Number(req.params.id);
+  const userId = String(req.params.id);
 
-  if (!userId || isNaN(userId)) {
+  if (!userId) {
     throw new AppError("ID inválido", 400);
   }
 
