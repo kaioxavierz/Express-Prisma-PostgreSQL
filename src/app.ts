@@ -3,6 +3,7 @@ import "dotenv/config";
 import express, {Request, Response} from "express";
 import { router as userRoutes } from "./routes/userRouter";
 import { router as productRoutes } from "./routes/productRouter";
+import { router as baseRoutes } from "./routes/baseRouter";
 import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
@@ -16,7 +17,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
-
+app.use("/bases", baseRoutes);
 app.use(errorHandler);
 
 export default app;
