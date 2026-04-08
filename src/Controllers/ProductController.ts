@@ -7,6 +7,7 @@ import { Prisma } from "@prisma/client";
 const productService = new ProductService();
 
 export async function index( req: Request, res: Response ): Promise<Response> {
+  console.log(req.userId, req.userEmail)
   const products: IUProductInterface[] = await productService.findAll();
 
   if(products.length === 0) {
@@ -30,11 +31,10 @@ export async function store(req: Request, res: Response): Promise<Response> {
   const data: Prisma.ProductCreateInput = {
     name: req.body.name,
     sku: req.body.sku,
-    stock: req.body.stock
   };
 
-  if(!data.name || !data.sku || data.stock === undefined) {
-    throw new AppError("Nome, SKU e estoque são obrigatórios", 400);
+  if(!data.name || !data.sku) {
+    throw new AppError("Nome e SKU são obrigatórios", 400);
   };
 
   const newProduct = await productService.createProduct(data);
@@ -48,11 +48,10 @@ export async function update(req: Request, res: Response): Promise<Response> {
   const data: Prisma.ProductUpdateInput = {
     name: req.body.name,
     sku: req.body.sku,
-    stock: req.body.stock
   };
 
-  if(!data.name || !data.sku || data.stock === undefined) {
-    throw new AppError("Nome, SKU e estoque são obrigatórios", 400);
+  if(!data.name || !data.sku) {
+    throw new AppError("Nome e SKU são obrigatórios", 400);
   };
 
   const updatedProduct = await productService.updateProduct(

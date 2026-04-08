@@ -11,7 +11,6 @@ export class ProductService {
         for (const product of products) {
             await prisma.product.create({ data: product });
             createdProducts.push(product as Product);
-
         }
         return createdProducts[createdProducts.length - 1];
     };

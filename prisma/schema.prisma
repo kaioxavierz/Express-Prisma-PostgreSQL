@@ -28,21 +28,22 @@ model Base {
 }
 
 model UserBase {
-  id      String @id @default(uuid())
+  id     String @id @default(uuid())
 
-  userId  String
-  baseId  String
-  role    String
+  userId String
+  baseId String
+  role   String
 
   user User @relation(fields: [userId], references: [id])
   base Base @relation(fields: [baseId], references: [id])
+
+  @@unique([userId, baseId])
 }
 
 model Product {
   id    String @id @default(uuid())
   name  String
   sku   String
-  stock Int
 
   inventory Inventory[]
 }
@@ -56,4 +57,6 @@ model Inventory {
 
   product Product @relation(fields: [productId], references: [id])
   base    Base    @relation(fields: [baseId], references: [id])
+
+  @@unique([productId, baseId])
 }

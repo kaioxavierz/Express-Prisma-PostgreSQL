@@ -1,16 +1,54 @@
-import { Prisma } from "@prisma/client";
+import { prisma } from "../client";
 import { AppError } from "../utils/appError";
 import { IUserBaseInterface } from "../interfaces/User-base";
 
 export class UserBaseService implements IUserBaseInterface {
-    association(userId: string, baseId: string): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    disassociation(userId: string, baseId: string): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    findBasesByUserId(userId: string): Promise<any[]> {
-        throw new Error("Method not implemented.");
-    }
-    
+  async addUserToBase(userId: string, baseId: string, role: string): Promise<void> {
+    await prisma.userBase.create({
+      data: {
+        userId,
+        baseId,
+        role
+      }
+    });
+  }
+  async getBasesFromUser(userId: string) {
+    return prisma.userBase.findMany({
+      where: { userId },
+      include: {
+        base: true
+      }
+    });
+  }
+  async getUsersFromBase(baseId: string) {
+    return prisma.userBase.findMany({
+      where: { baseId },
+      include: {
+        user: true
+      }
+    });
+  }
+  async updateUserRole(userId: string, baseId: string, newRole: string): Promise<void> {
+    await prisma.userBase.update({
+      where: {
+        userId_baseId: {
+          userId: userId,
+          baseId: baseId
+        }
+      },
+      data: { role: newRole }
+    });
+  }
+
+  async removeUserFromBase(userId: string, baseId: string): Promise<void> {
+    await prisma.userBase.delete({
+      where: {
+        userId_baseId: {
+          userId: userId,
+          baseId: baseId
+        }
+      }
+    });
+  }
+
 }

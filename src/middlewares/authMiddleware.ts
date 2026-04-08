@@ -4,14 +4,19 @@ import { AppError } from "../utils/appError";
 
 
 interface TokenPayload {
-  userId: string;
+  id: string;
+  email: string;
+}
+declare global {
+  namespace Express {
+    interface Request {
+      userId?: string;
+      userEmail?: string;
+    }
+  }
 }
 
-export function authMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function authMiddleware( req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -21,15 +26,14 @@ export function authMiddleware(
   const [, token] = authHeader.split(" ");
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET!
-    ) as TokenPayload;
-
-    req.user = {
-      id: decoded.userId,
-    };
-
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      throw new AppError("JWT_SECRET não configurado", 500);
+    }
+    const decoded = jwt.verify(token, jwtSecret) as TokenPayload;
+    const { id, email} = decoded;
+    req.userId = id
+    req.userEmail = email
     return next();
   } catch {
     throw new AppError("Token inválido", 401);

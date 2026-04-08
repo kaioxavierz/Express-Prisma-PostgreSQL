@@ -1,12 +1,13 @@
 import { Router, Request, Response} from "express";
 import { index, show, store, deleteProduct, update } from "../Controllers/ProductController";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
 export const router = Router();
 
-router.get("/", index);
-router.get("/:id", show);
-router.post("/", store);
-router.put("/:id", update);
-router.delete("/:id", deleteProduct);
+router.get("/", authMiddleware,index);
+router.get("/:id", authMiddleware, show);
+router.post("/", authMiddleware, store);
+router.put("/:id", authMiddleware, update);
+router.delete("/:id", authMiddleware, deleteProduct);
 
 export default router;
