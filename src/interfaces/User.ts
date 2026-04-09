@@ -10,6 +10,7 @@ export interface IUserService {
      findById(userId: string): Promise<IUserInterface | null>;
      updateUser(userId: string, newUser: IUserInterface): Promise<IUserInterface>;
      deleteUser(userId: string): Promise<void>;
+     comparePassword(password: string, hash: string): Promise<boolean>;
 }
 
 export interface IUserController {

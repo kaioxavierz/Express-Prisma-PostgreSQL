@@ -8,6 +8,7 @@ import { router as baseRoutes } from "./routes/baseRouter";
 import { router as userBaseRelationRoutes } from "./routes/userBaseRelation";
 import { router as inventoryRoutes } from "./routes/inventoryRouter";
 import { router as tokenRoutes } from "./routes/tokenRouter";
+import { router as authRoutes } from "./routes/authRouter";
 import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
@@ -26,6 +27,7 @@ app.use("/bases", baseRoutes);
 app.use("/user-base-relations", userBaseRelationRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/token", tokenRoutes);
+app.use("/auth", authRoutes);
 app.use(errorHandler);
 
 export default app;

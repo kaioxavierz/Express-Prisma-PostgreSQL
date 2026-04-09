@@ -2,6 +2,7 @@ import { hashPassword } from "../utils/password";
 import { AppError } from "../utils/appError";
 import { prisma } from "../client";
 import { IUserInterface, IUserService } from "../interfaces/User";
+import bcrypt from "bcrypt";
 
 export class UserService implements IUserService {
 
@@ -68,5 +69,9 @@ export class UserService implements IUserService {
         await prisma.user.delete({
             where: { id: userId },
         });
+    }
+
+    async comparePassword(password: string, hash: string): Promise<boolean> {
+        return await bcrypt.compare(password, hash);
     }
 }
