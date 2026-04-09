@@ -3,6 +3,8 @@ import { AppError } from "../utils/appError";
 import { prisma } from "../client";
 import { User } from "@prisma/client";
 import { comparePassword } from "../utils/password";
+import { createToken } from "../services/tokenService";
+
 import jwt from "jsonwebtoken";
 
 export async function generateToken(req: Request, res: Response) {
@@ -25,13 +27,6 @@ export async function generateToken(req: Request, res: Response) {
         throw new AppError("Credenciais inválidas", 400);
   }
 
-    const token = jwt.sign(
-        { 
-            id:(userExists.id),
-            email: userExists.email
-        },
-        process.env.JWT_SECRET as string,
-        { expiresIn: '1h' }
-    );
+    const token = createToken({ id: userExists.id, email: userExists.email });
     res.json({ token });
 }
